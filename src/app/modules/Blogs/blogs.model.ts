@@ -13,9 +13,6 @@ const blogsSchema = new Schema<TBlog>(
       required: true,
       unique: false,
     },
-    date: {
-      type: String,
-    },
     description: {
       type: String,
       required: true,

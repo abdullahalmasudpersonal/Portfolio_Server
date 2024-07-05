@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
-import { BlogsServices } from "./blogs.services";
 import sendResponse from "../../utils/sendResponse";
+import { SkillServices } from "./skills.services";
 
-const getAllBlgos = catchAsync(async (req, res) => {
+const getAllSkills = catchAsync(async (req, res) => {
   try {
-    const result = await BlogsServices.getAllBlogs();
+    const result = await SkillServices.getAllSkillsIntoDB();
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Products retrived successfully",
+      message: "Get all skill successfully",
       data: result,
     });
   } catch (err: any) {
@@ -22,13 +22,13 @@ const getAllBlgos = catchAsync(async (req, res) => {
   }
 });
 
-const CreateBlog = catchAsync(async (req, res) => {
+const createSkill = catchAsync(async (req, res) => {
   try {
-    const result = await BlogsServices.createBlogIntoDB(req);
+    const result = await SkillServices.crearteSkillIntoDB(req);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "blog create successfully",
+      message: "Create skill successfully",
       data: result,
     });
   } catch (err: any) {
@@ -40,7 +40,7 @@ const CreateBlog = catchAsync(async (req, res) => {
   }
 });
 
-export const BlogsControllers = {
-  getAllBlgos,
-  CreateBlog,
+export const SkillControllers = {
+  getAllSkills,
+  createSkill,
 };

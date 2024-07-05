@@ -6,7 +6,7 @@ const getAllProjects = async () => {
   return result;
 };
 
-const getSingleProjectIntoDB = async (id:string) => {
+const getSingleProjectIntoDB = async (id: string) => {
   const result = await Project.findById(id);
   return result;
 };

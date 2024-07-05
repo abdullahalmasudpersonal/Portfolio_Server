@@ -5,4 +5,6 @@ const router = Router();
 
 router.get("/", BlogsControllers.getAllBlgos);
 
+router.post("/create-blog", BlogsControllers.CreateBlog);
+
 export const BlogsRoutes = router;
