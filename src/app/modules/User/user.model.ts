@@ -4,7 +4,7 @@ import { TUser, UserModel } from "./user.interface";
 import config from "../../config";
 
 const userSchema = new Schema<TUser, UserModel>({
-  id: {
+  _id: {
     type: String,
     required: true,
     unique: true,
@@ -52,12 +52,12 @@ userSchema.statics.isPasswordMatched = async function (
 };
 
 userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
-    passwordChangedTimestamp: Date,
-    jwtIssuedTimestamp: number,
-  ) {
-    const passwordChangedTime =
-      new Date(passwordChangedTimestamp).getTime() / 1000;
-    return passwordChangedTime > jwtIssuedTimestamp;
-  };
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
+};
 
 export const User = model<TUser, UserModel>("User", userSchema);
