@@ -9,27 +9,25 @@ const loginUserInto = async (payload: TLoginUser) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(payload.email);
 
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
+  }
 
+  if (!(await User.isPasswordMatched(payload?.password, user?.password)))
+    throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
 
-    // if (!user) {
-    //   throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
-    // }
+  const jwtPayload = {
+    email: user?.email,
+    role: user?.role,
+  };
 
-  // if (!(await User.isPasswordMatched(payload?.password, user?.password)))
-  //   throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
 
-  // const jwtPayload = {
-  //   userId: user?.id,
-  //   email: user?.email,
-  // };
-
-  // const accessToken = createToken(
-  //   jwtPayload,
-  //   config.jwt_access_secret as string,
-  //   config.jwt_access_expires_in as string
-  // );
-
-  // return accessToken;
+  return accessToken;
 };
 
 export const AuthServices = {

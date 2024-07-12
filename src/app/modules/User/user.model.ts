@@ -9,6 +9,14 @@ const userSchema = new Schema<TUser, UserModel>({
     required: true,
     unique: true,
   },
+  role: {
+    type: String,
+    enum: {
+      values: ["admin", "generaluser"],
+      message: "{VALUE} is not a valid role",
+    },
+    required: [true, "Role is required"],
+  },
   email: {
     type: String,
     required: true,
