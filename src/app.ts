@@ -13,6 +13,7 @@ app.use(
       "https://abdullahalmasud.netlify.app",
       "http://localhost:3000",
       "http://localhost:5173",
+      "http://localhost:5174",
     ],
     credentials: true,
   })
