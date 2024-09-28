@@ -23,8 +23,10 @@ const getAllSkills = catchAsync(async (req, res) => {
 });
 
 const createSkill = catchAsync(async (req, res) => {
+  console.log(req, 'req');
   try {
     const result = await SkillServices.crearteSkillIntoDB(req);
+    console.log(result, 'controller');
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
