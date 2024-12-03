@@ -1,7 +1,6 @@
 import { Model } from "mongoose";
 
 export interface TUser {
-  _id: string;
   role: string;
   email: string;
   password: string;

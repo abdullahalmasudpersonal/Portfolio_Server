@@ -3,65 +3,59 @@ import { TProject } from "./projects.interface";
 
 const projectSchema = new Schema<TProject>(
   {
-    porject_name: {
+    serialNumber: {
+      type: Number,
+      required: true,
+      unique: false,
+    },
+    name: {
       type: String,
       required: true,
       unique: false,
     },
-    porject_title: {
+    title: {
       type: String,
       required: true,
       unique: false,
     },
-    porject_detail_1: {
+    features: {
       type: String,
       required: true,
-      unique: false,
     },
-    porject_detail_2: {
+    features2: {
+      type: [String],
+      required: false,
+    },
+    description: {
       type: String,
       required: true,
-      unique: false,
     },
-    porject_detail_3: {
-      type: String,
-      required: true,
-      unique: false,
+    description2: {
+      type: [String],
+      required: false,
     },
-    porject_detail_4: {
-      type: String,
-      required: true,
-      unique: false,
+    image: {
+      type: [String],
+      required: false,
     },
-    porject_img1: {
-      type: String,
-      required: true,
-      unique: false,
-    },
-    porject_img2: {
-      type: String,
-      required: true,
-      unique: false,
-    },
-    porject_img3: {
-      type: String,
-      required: true,
-      unique: false,
-    },
-    porject_live_link: {
+    live_link: {
       type: String,
       required: true,
       unique: true,
     },
-    porject_client_side: {
+    client_side_code: {
       type: String,
       required: true,
       unique: true,
     },
-    porject_server_side: {
+    server_side_code: {
       type: String,
       required: true,
       unique: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {

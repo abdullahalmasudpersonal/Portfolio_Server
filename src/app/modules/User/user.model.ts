@@ -4,11 +4,6 @@ import { TUser, UserModel } from "./user.interface";
 import config from "../../config";
 
 const userSchema = new Schema<TUser, UserModel>({
-  _id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   role: {
     type: String,
     enum: {
