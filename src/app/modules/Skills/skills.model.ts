@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { TSkills } from "./skills.interface";
+import { SkillModel, TSkills } from "./skills.interface";
 
-const skillSchema = new Schema<TSkills>({
+const skillSchema = new Schema<TSkills, SkillModel>({
   title: {
     type: String,
     required: true,
@@ -12,4 +12,8 @@ const skillSchema = new Schema<TSkills>({
   },
 });
 
-export const Skill = model<TSkills>("Skill", skillSchema);
+skillSchema.statics.isSkillExistsByName = async function (_id: string) {
+  return await Skill.findById({ _id })
+}
+
+export const Skill = model<TSkills, SkillModel>("Skill", skillSchema);
