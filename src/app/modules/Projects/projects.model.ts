@@ -38,6 +38,14 @@ const projectSchema = new Schema<TProject>(
       type: [String],
       required: false,
     },
+    frontEndTechnology: {
+      type: String,
+      required: true,
+    },
+    backEndTechnology: {
+      type: String,
+      required: true,
+    },
     live_link: {
       type: String,
       required: true,

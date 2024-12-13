@@ -1,6 +1,7 @@
 import { Model } from "mongoose";
 
 export interface TSkills {
+  serialNumber: number;
   title: string;
   image?: string;
 }

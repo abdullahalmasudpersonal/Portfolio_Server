@@ -32,4 +32,9 @@ router.patch(
   }
 );
 
+router.patch(
+  "/update-skill-serial-number",
+  SkillControllers.updateSkillSerialNumber
+);
+
 export const SkillRoutes = router;

@@ -3,9 +3,10 @@ import { Skill } from "./skills.model";
 import AppError from "../../errors/AppError";
 import { IUploadFile } from "../../interface/file";
 import httpStatus from "http-status";
+import { generateSkillSerialNumber } from "./skills.utils";
 
 const getAllSkillsIntoDB = async () => {
-  const result = await Skill.find();
+  const result = await Skill.find().sort({ serialNumber: 1 });
   return result;
 };
 
@@ -19,6 +20,7 @@ const crearteSkillIntoDB = async (req: Request) => {
   const file = req.file as IUploadFile;
   skillData.image = file?.path;
   skillData.title;
+  skillData.serialNumber = await generateSkillSerialNumber();
   const result = Skill.create(skillData);
   return result;
 };
@@ -45,9 +47,35 @@ const updateSkillIntoDB = async (_id: string, req: Request) => {
   return updatedSkill;
 };
 
+const updateSkillSerialNumberIntoDB = async (req: Request) => {
+  const { skills } = req.body;
+
+  if (!skills || !Array.isArray(skills)) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Invalid data format");
+  }
+
+  try {
+    const bulkUpdates = skills.map((skill, index) => ({
+      updateOne: {
+        filter: { _id: skill._id },
+        update: {
+          $set: {
+            serialNumber: index + 1,
+          },
+        },
+      },
+    }));
+
+    await Skill.bulkWrite(bulkUpdates);
+  } catch (error) {
+    console.error("Error updating serial numbers:", error);
+  }
+};
+
 export const SkillServices = {
   crearteSkillIntoDB,
   getAllSkillsIntoDB,
   deleteSkillIntoDB,
   updateSkillIntoDB,
+  updateSkillSerialNumberIntoDB,
 };

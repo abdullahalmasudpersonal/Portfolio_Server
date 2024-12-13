@@ -63,9 +63,22 @@ const updateSkill = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateSkillSerialNumber = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await SkillServices.updateSkillSerialNumberIntoDB(req);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Update skill serial number!",
+      data: result,
+    });
+  }
+);
+
 export const SkillControllers = {
   getAllSkills,
   createSkill,
   deleteSkill,
   updateSkill,
+  updateSkillSerialNumber,
 };

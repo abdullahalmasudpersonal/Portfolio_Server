@@ -7,6 +7,8 @@ export interface TProject {
   description: string;
   description2?: string[];
   image?: string[];
+  frontEndTechnology: string;
+  backEndTechnology: string;
   live_link: string;
   client_side_code: string;
   server_side_code: string;
