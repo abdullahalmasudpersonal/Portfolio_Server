@@ -1,9 +1,10 @@
-import { v2 as cloudinary } from 'cloudinary';
-import multer from 'multer';
-import * as fs from 'fs';
-import config from '../config';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import { ICloudinaryResponse, IUploadFile } from '../interface/file';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { v2 as cloudinary } from "cloudinary";
+import multer from "multer";
+import * as fs from "fs";
+import config from "../config";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { ICloudinaryResponse, IUploadFile } from "../interface/file";
 
 cloudinary.config({
   cloud_name: config.cloudinary.cloudinary_cloud_name,
@@ -26,10 +27,15 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    folder: 'uploads', // Cloudinary এর ফোল্ডার
-    format: async (req: any, file: any) => 'png', // ফাইল ফরম্যাট সেট করো
-    public_id: (req, file) => file.originalname.split('.')[0],
+    folder: (req) => {
+      console.log("Request Body:", req.body.imageCategory);
+      return `portfolio`;
+      // return `portfolio/${req.body.imageCategory}`;
+    },
+    format: async () => "png", // ফাইল ফরম্যাট সেট করো
+    public_id: (req, file) => file.originalname.split(".")[0],
     // folder: 'uploads', // Cloudinary-তে ফোল্ডারের নাম
     // allowed_formats: ['jpeg', 'png', 'jpg', 'webp'], // ফরম্যাট সীমাবদ্ধতা
   },
@@ -57,7 +63,7 @@ const upload = multer({ storage: storage });
 // };
 
 const uploadToCloudinary = async (
-  uploadFiles: IUploadFile[],
+  uploadFiles: IUploadFile[]
 ): Promise<ICloudinaryResponse[]> => {
   const uploadPromises = uploadFiles.map(
     (file) =>
@@ -70,7 +76,7 @@ const uploadToCloudinary = async (
                 fs.unlinkSync(file.path);
               }
             } catch (unlinkError) {
-              console.error('Error while deleting the file:', unlinkError);
+              console.error("Error while deleting the file:", unlinkError);
             }
 
             if (error) {
@@ -78,9 +84,9 @@ const uploadToCloudinary = async (
             } else {
               resolve(result);
             }
-          },
+          }
         );
-      }),
+      })
   );
 
   return Promise.all(uploadPromises);

@@ -1,10 +1,15 @@
 import { Request } from "express";
 import { Blog } from "./blogs.model";
 
-const getAllBlogs = async () => {
+const getAllBlogIntoDB = async () => {
   const result = await Blog.find().sort({ createdAt: -1 });
   return result;
 };
+
+const getSingleBlogIntoDB = async(id:string)=> {
+  const result = await Blog.findById(id);
+  return result;
+}
 
 const createBlogIntoDB = async (req: Request) => {
   const blogData = req.body;
@@ -13,6 +18,7 @@ const createBlogIntoDB = async (req: Request) => {
 };
 
 export const BlogsServices = {
-  getAllBlogs,
+  getAllBlogIntoDB,
+  getSingleBlogIntoDB,
   createBlogIntoDB,
 };

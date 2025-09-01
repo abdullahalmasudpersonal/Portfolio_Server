@@ -15,14 +15,6 @@ router.post(
   }
 );
 
-router.delete("/:skillId", SkillControllers.deleteSkill);
-// FileUploadHelper.upload.single("file"),
-// (req: Request, res: Response, next: NextFunction) => {
-//   req.body = JSON.parse(req.body.data);
-//   return SkillControllers.createSkill(req, res, next);
-// },
-SkillControllers.createSkill;
-
 router.patch(
   "/update-skill/:id",
   FileUploadHelper.upload.single("file"),
@@ -36,5 +28,7 @@ router.patch(
   "/update-skill-serial-number",
   SkillControllers.updateSkillSerialNumber
 );
+
+router.delete("/:skillId", SkillControllers.deleteSkill);
 
 export const SkillRoutes = router;
