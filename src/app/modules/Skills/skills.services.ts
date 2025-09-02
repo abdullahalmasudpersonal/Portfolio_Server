@@ -25,10 +25,6 @@ const crearteSkillIntoDB = async (req: Request) => {
   return result;
 };
 
-const deleteSkillIntoDB = async (skillId: string) => {
-  return await Skill.deleteOne({ _id: skillId });
-};
-
 const updateSkillIntoDB = async (_id: string, req: Request) => {
   const skill = await Skill.isSkillExistsByName(req?.params?.id);
   if (!skill) {
@@ -70,6 +66,10 @@ const updateSkillSerialNumberIntoDB = async (req: Request) => {
   } catch (error) {
     console.error("Error updating serial numbers:", error);
   }
+};
+
+const deleteSkillIntoDB = async (skillId: string) => {
+  return await Skill.deleteOne({ _id: skillId });
 };
 
 export const SkillServices = {

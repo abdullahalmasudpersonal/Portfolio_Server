@@ -1,16 +1,25 @@
 import { model, Schema } from "mongoose";
-import { TBlog } from "./blogs.interface";
+import { BlogModel, TBlog } from "./blogs.interface";
 
 const blogsSchema = new Schema<TBlog>(
   {
+    serialNumber: {
+      type: Number,
+      required: true,
+      unique: false,
+    },
     name: {
       type: String,
       required: true,
       unique: true,
     },
-    image: {
+    title: {
       type: String,
       required: true,
+    },
+    image: {
+      type: String,
+      required: false,
       unique: false,
     },
     description: {
@@ -24,6 +33,10 @@ const blogsSchema = new Schema<TBlog>(
   }
 );
 
+blogsSchema.statics.isBlogExistsById = async function (_id: string) {
+  return await Blog.findById({ _id });
+};
+
 // productSchema.pre('find', function (next) {
 //     this.find({ isDeleted: { $ne: true } }, { quantity: { $gt: 0 } });
 //     next();
@@ -34,4 +47,4 @@ const blogsSchema = new Schema<TBlog>(
 //     next();
 //   });
 
-export const Blog = model<TBlog>("blog", blogsSchema);
+export const Blog = model<TBlog, BlogModel>("Blog", blogsSchema);

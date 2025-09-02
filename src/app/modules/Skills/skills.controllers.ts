@@ -33,22 +33,6 @@ const deleteSkill = catchAsync(async (req, res) => {
     message: "Delete single skill successfully",
     data: result,
   });
-  try {
-    const result = await SkillServices.crearteSkillIntoDB(req);
-
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "Create skill successfully",
-      data: result,
-    });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message,
-      error: err,
-    });
-  }
 });
 
 const updateSkill = catchAsync(async (req: Request, res: Response) => {

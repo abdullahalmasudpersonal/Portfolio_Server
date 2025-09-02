@@ -12,55 +12,54 @@ cloudinary.config({
   api_secret: config.cloudinary.cloudinary_api_secret,
 });
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//     // cb(null, `${Date.now()}-${file.originalname}`);
-//   },
-// });
-
-// Multer Cloudinary Storage কনফিগারেশন
-
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    folder: (req) => {
-      console.log("Request Body:", req.body.imageCategory);
-      return `portfolio`;
-      // return `portfolio/${req.body.imageCategory}`;
-    },
-    format: async () => "png", // ফাইল ফরম্যাট সেট করো
-    public_id: (req, file) => file.originalname.split(".")[0],
-    // folder: 'uploads', // Cloudinary-তে ফোল্ডারের নাম
-    // allowed_formats: ['jpeg', 'png', 'jpg', 'webp'], // ফরম্যাট সীমাবদ্ধতা
+  // params: {
+  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //   // @ts-ignore
+  //   folder: (req) => {
+  //     console.log(req, "req");
+  //     const base = "portfolio";
+  //     // console.log("Request Body:", req.body.category);
+  //     let folderPath = `${base}/${req.body.category}`;
+
+  //     if (req.body.subCategory) {
+  //       folderPath += `/${req.body.subCategory}`;
+  //     }
+
+  //     return folderPath;
+  //   },
+  //   format: async () => "png", // ফাইল ফরম্যাট সেট করো
+  //   public_id: (req, file) => file.originalname.split(".")[0],
+  //   // allowed_formats: ['jpeg', 'png', 'jpg', 'webp'], // ফরম্যাট সীমাবদ্ধতা
+  // },
+  params: async (req, file) => {
+    let base = "portfolio";
+
+    if (req.baseUrl.includes("blog")) {
+      base = "portfolio/blogs";
+    } else if (req.baseUrl.includes("skill")) {
+      base = "portfolio/skills";
+    } else if (req.baseUrl.includes("project")) {
+      base = `portfolio/projects`;
+    }
+
+    const fileName = file.originalname
+      .split(".")[0]
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-_]/g, "");
+
+    return {
+      folder: base,
+      allowed_formats: ["jpeg", "png", "jpg", "webp"],
+      public_id: `${Date.now()}-${fileName}`,
+      resource_type: "image",
+    };
   },
 });
 
 const upload = multer({ storage: storage });
-
-//////////// Only Single file upload in Object
-// const uploadToCloudinary = async (
-//   uploadFiles: IUploadFile,
-// ): Promise<ICloudinaryResponse | undefined> => {
-//   return new Promise((resolve, reject) => {
-//     cloudinary.uploader.upload(
-//       uploadFiles.path,
-//       (error: Error, result: ICloudinaryResponse) => {
-//         fs.unlinkSync(uploadFiles.path);
-//         if (error) {
-//           reject(error);
-//         } else {
-//           resolve(result);
-//         }
-//       },
-//     );
-//   });
-// };
 
 const uploadToCloudinary = async (
   uploadFiles: IUploadFile[]
@@ -96,3 +95,32 @@ export const FileUploadHelper = {
   uploadToCloudinary,
   upload,
 };
+
+//////////// Only Single file upload in Object
+// const uploadToCloudinary = async (
+//   uploadFiles: IUploadFile,
+// ): Promise<ICloudinaryResponse | undefined> => {
+//   return new Promise((resolve, reject) => {
+//     cloudinary.uploader.upload(
+//       uploadFiles.path,
+//       (error: Error, result: ICloudinaryResponse) => {
+//         fs.unlinkSync(uploadFiles.path);
+//         if (error) {
+//           reject(error);
+//         } else {
+//           resolve(result);
+//         }
+//       },
+//     );
+//   });
+// };
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//     // cb(null, `${Date.now()}-${file.originalname}`);
+//   },
+// });

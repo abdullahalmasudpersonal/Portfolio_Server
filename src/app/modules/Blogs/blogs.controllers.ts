@@ -42,25 +42,50 @@ const getSingleBlog = catchAsync(async (req, res) => {
 });
 
 const CreateBlog = catchAsync(async (req, res) => {
-  try {
-    const result = await BlogsServices.createBlogIntoDB(req);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "Create blog successfully",
-      data: result,
-    });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message,
-      error: err,
-    });
-  }
+  const result = await BlogsServices.createBlogIntoDB(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Create blog successfully",
+    data: result,
+  });
+});
+
+const UpdateBlog = catchAsync(async (req, res) => {
+  const result = await BlogsServices.updateBlogIntoDB(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Update single blog successfully",
+    data: result,
+  });
+});
+
+const updateBlogSerialNumber = catchAsync(async (req, res) => {
+  const result = await BlogsServices.updateBlogSerialNumberIntoDB(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Update blog serial number",
+    data: result,
+  });
+});
+
+const deleteBlog = catchAsync(async (req, res) => {
+  const result = await BlogsServices.deleteBlogIntoDB(req?.params.blogId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Update blog serial number",
+    data: result,
+  });
 });
 
 export const BlogsControllers = {
   getAllBlgo,
   getSingleBlog,
   CreateBlog,
+  UpdateBlog,
+  updateBlogSerialNumber,
+  deleteBlog
 };
