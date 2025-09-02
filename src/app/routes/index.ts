@@ -9,7 +9,7 @@ const router = Router();
 
 const moduleRoutes = [
   {
-    path: "/blogs",
+    path: "/blog",
     route: BlogsRoutes,
   },
   {

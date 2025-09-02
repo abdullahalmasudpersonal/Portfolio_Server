@@ -4,7 +4,7 @@ import catchAsync from "../../utils/catchAsync";
 import { BlogsServices } from "./blogs.services";
 import sendResponse from "../../utils/sendResponse";
 
-const getAllBlgo = catchAsync(async (req, res) => {
+const getAllBlog = catchAsync(async (req, res) => {
   try {
     const result = await BlogsServices.getAllBlogIntoDB();
     sendResponse(res, {
@@ -82,7 +82,7 @@ const deleteBlog = catchAsync(async (req, res) => {
 });
 
 export const BlogsControllers = {
-  getAllBlgo,
+  getAllBlog,
   getSingleBlog,
   CreateBlog,
   UpdateBlog,

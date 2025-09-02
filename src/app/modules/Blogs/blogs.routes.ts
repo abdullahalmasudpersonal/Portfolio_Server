@@ -4,10 +4,6 @@ import { FileUploadHelper } from "../../utils/fileUploadHelper";
 
 const router = Router();
 
-router.get("/", BlogsControllers.getAllBlgo);
-
-router.get("/:blogId", BlogsControllers.getSingleBlog);
-
 router.post(
   "/create-blog",
   FileUploadHelper.upload.single("file"),
@@ -16,6 +12,10 @@ router.post(
     return BlogsControllers.CreateBlog(req, res, next);
   }
 );
+
+router.get("/all-blog", BlogsControllers.getAllBlog);
+
+router.get("/single-blog/:blogId", BlogsControllers.getSingleBlog);
 
 router.patch(
   "/update-blog/:id",
@@ -32,7 +32,7 @@ router.patch(
 );
 
 router.delete(
-  "/:blogId",
+  "/delete-blog/:blogId",
   BlogsControllers.deleteBlog
 );
 
