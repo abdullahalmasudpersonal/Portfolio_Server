@@ -5,6 +5,7 @@ export interface TBlog {
   name: string;
   title: string;
   image?: string;
+  card_description:string;
   description: string;
   isDeleted: boolean;
 }

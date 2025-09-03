@@ -20,12 +20,14 @@ const blogsSchema = new Schema<TBlog>(
     image: {
       type: String,
       required: false,
-      unique: false,
+    },
+    card_description: {
+      type: String,
+      required: true,
     },
     description: {
       type: String,
       required: true,
-      unique: false,
     },
   },
   {
