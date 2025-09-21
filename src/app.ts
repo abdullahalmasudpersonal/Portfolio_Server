@@ -25,7 +25,7 @@ app.use(
 app.use("/api", router);
 
 app.get("/", (req: express.Request, res: express.Response) => {
-  res.send("Hellow from Abdullah Al Masud Portfolio");
+  res.send("Hellow from Abdullah Al Masud Portfolio Backend");
 });
 
 app.use(globalErrorHandler);

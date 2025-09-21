@@ -33,7 +33,7 @@ const crearteSkillIntoDB = async (req: Request) => {
 const updateSkillIntoDB = async (_id: string, req: Request) => {
   const skill = await Skill.isSkillExistsByName(req?.params?.id);
   if (!skill) {
-    throw new AppError(httpStatus.NOT_FOUND, "This user is not found !!!");
+    throw new AppError(httpStatus.NOT_FOUND, "This skill is not found !!!");
   }
 
   const file = req.file;
