@@ -5,12 +5,22 @@ import sendResponse from "../../utils/sendResponse";
 import { SkillServices } from "./skills.services";
 import { Request, Response } from "express";
 
-const getAllSkills = catchAsync(async (req: Request, res: Response) => {
-  const result = await SkillServices.getAllSkillsIntoDB();
+const getAllSkill = catchAsync(async (req: Request, res: Response) => {
+  const result = await SkillServices.getAllSkillIntoDB();
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Get all skill successfully",
+    data: result,
+  });
+});
+
+const getSingleSkill = catchAsync(async (req: Request, res: Response) => {
+  const result = await SkillServices.getSingleSkillIntoDB(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Get single skill successfully",
     data: result,
   });
 });
@@ -60,7 +70,8 @@ const updateSkillSerialNumber = catchAsync(
 );
 
 export const SkillControllers = {
-  getAllSkills,
+  getAllSkill,
+  getSingleSkill,
   createSkill,
   deleteSkill,
   updateSkill,

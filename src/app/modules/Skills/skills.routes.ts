@@ -4,7 +4,9 @@ import { FileUploadHelper } from "../../utils/fileUploadHelper";
 
 const router = Router();
 
-router.get("/", SkillControllers.getAllSkills);
+router.get("/all-skill", SkillControllers.getAllSkill);
+
+router.get("/single-skill/:id", SkillControllers.getSingleSkill);
 
 router.post(
   "/create-skill",

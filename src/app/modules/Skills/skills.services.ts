@@ -5,9 +5,14 @@ import { IUploadFile } from "../../interface/file";
 import httpStatus from "http-status";
 import { generateSkillSerialNumber } from "./skills.utils";
 
-const getAllSkillsIntoDB = async () => {
+const getAllSkillIntoDB = async () => {
   const result = await Skill.find().sort({ serialNumber: 1 });
   return result;
+};
+
+const getSingleSkillIntoDB = async (req: Request) => {
+  const skill = req.params.id;
+  return await Skill.findById({ _id: skill });
 };
 
 const crearteSkillIntoDB = async (req: Request) => {
@@ -74,7 +79,8 @@ const deleteSkillIntoDB = async (skillId: string) => {
 
 export const SkillServices = {
   crearteSkillIntoDB,
-  getAllSkillsIntoDB,
+  getAllSkillIntoDB,
+  getSingleSkillIntoDB,
   deleteSkillIntoDB,
   updateSkillIntoDB,
   updateSkillSerialNumberIntoDB,

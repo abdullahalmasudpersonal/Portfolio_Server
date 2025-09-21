@@ -36,11 +36,11 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     let base = "portfolio";
 
-    if (req.baseUrl.includes("blog")) {
+    if (req.originalUrl.includes("blog")) {
       base = "portfolio/blogs";
-    } else if (req.baseUrl.includes("skill")) {
+    } else if (req.originalUrl.includes("skill")) {
       base = "portfolio/skills";
-    } else if (req.baseUrl.includes("project")) {
+    } else if (req.originalUrl.includes("project")) {
       base = `portfolio/projects`;
     }
 
