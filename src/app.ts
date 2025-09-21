@@ -3,8 +3,11 @@ import cors from "cors";
 import notFound from "./app/middlewares/notFound";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorhandler";
+import favicon from "serve-favicon";
+import path from "path";
 
 const app: Application = express();
+app.use(favicon(path.join(__dirname, "../public", "favicon.ico")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
