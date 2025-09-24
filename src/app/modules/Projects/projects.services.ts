@@ -3,7 +3,6 @@ import { Project } from "./projects.model";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import { IUploadFile } from "../../interface/file";
-import { FileUploadHelper } from "../../utils/fileUploadHelper";
 import { generateSerialNumber } from "./products.utils";
 
 const createProjectInotDB = async (req: Request) => {
@@ -13,22 +12,10 @@ const createProjectInotDB = async (req: Request) => {
     throw new AppError(httpStatus.BAD_REQUEST, "Alrady exist this project!");
   }
 
-  const files = req.files as unknown;
-  let uploadFiles: IUploadFile[] = [];
-
-  if (Array.isArray(files)) {
-    uploadFiles = files as IUploadFile[];
-  } else if (files && typeof files === "object") {
-    uploadFiles = Object.values(files).flat() as IUploadFile[];
+  if (req?.files) {
+    const files = req.files as IUploadFile[];
+    projectData.image = files.map((img) => img.path);
   }
-
-  if (uploadFiles) {
-    const uploadedProjectImage = await FileUploadHelper.uploadToCloudinary(
-      uploadFiles
-    );
-    req.body.image = uploadedProjectImage.map((img) => img.secure_url);
-  }
-
   projectData.serialNumber = await generateSerialNumber();
 
   const result = await Project.create(projectData);
@@ -49,8 +36,7 @@ const updateProjectIntoDB = async (req: Request) => {
   const projectId = req.params.projectId;
   const updateData = JSON.parse(req.body.data);
   let existingFiles = req.body.existingFiles || [];
-  const newFiles = req.files as unknown;
-  let uploadFiles: IUploadFile[] = [];
+  const newFiles = req.files as IUploadFile[];
 
   /// convert array when single existing File
   if (!Array.isArray(existingFiles)) {
@@ -61,19 +47,9 @@ const updateProjectIntoDB = async (req: Request) => {
     }
   }
 
-  if (Array.isArray(newFiles)) {
-    uploadFiles = newFiles as IUploadFile[];
-  } else if (newFiles && typeof newFiles === "object") {
-    uploadFiles = Object.values(newFiles).flat() as IUploadFile[];
-  }
-
-  if (uploadFiles.length > 0) {
-    const uploadedImages = await FileUploadHelper.uploadToCloudinary(
-      uploadFiles
-    );
-    const newImageURLs = uploadedImages.map((img) => img.secure_url);
-
-    updateData.image = [...existingFiles, ...newImageURLs];
+  if (newFiles?.length > 0) {
+    const img = newFiles.map((img) => img.path);
+    updateData.image = [...existingFiles, ...img];
   } else {
     updateData.image = existingFiles;
   }

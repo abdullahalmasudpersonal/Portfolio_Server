@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
-import * as fs from "fs";
 import config from "../config";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import { ICloudinaryResponse, IUploadFile } from "../interface/file";
 
 cloudinary.config({
   cloud_name: config.cloudinary.cloudinary_cloud_name,
@@ -42,38 +39,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-const uploadToCloudinary = async (
-  uploadFiles: IUploadFile[]
-): Promise<ICloudinaryResponse[]> => {
-  const uploadPromises = uploadFiles.map(
-    (file) =>
-      new Promise<ICloudinaryResponse>((resolve, reject) => {
-        cloudinary.uploader.upload(
-          file.path,
-          (error: Error, result: ICloudinaryResponse) => {
-            try {
-              if (fs.existsSync(file.path)) {
-                fs.unlinkSync(file.path);
-              }
-            } catch (unlinkError) {
-              console.error("Error while deleting the file:", unlinkError);
-            }
-
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
-            }
-          }
-        );
-      })
-  );
-
-  return Promise.all(uploadPromises);
-};
-
 export const FileUploadHelper = {
-  uploadToCloudinary,
   upload,
 };
 

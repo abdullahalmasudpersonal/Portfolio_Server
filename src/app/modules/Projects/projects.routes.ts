@@ -10,7 +10,7 @@ router.get("/:projectId", ProjectsController.getSingleProject);
 
 router.post(
   "/create-project",
-  FileUploadHelper.upload.array("files", 10),
+  FileUploadHelper.upload.array("files", 6),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     return ProjectsController.createProject(req, res, next);
@@ -19,7 +19,7 @@ router.post(
 
 router.patch(
   "/update-project/:projectId",
-  FileUploadHelper.upload.array("files", 10),
+  FileUploadHelper.upload.array("files", 6),
   (req: Request, res: Response, next: NextFunction) => {
     return ProjectsController.updateProject(req, res, next);
   }
