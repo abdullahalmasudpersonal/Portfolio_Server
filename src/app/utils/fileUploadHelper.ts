@@ -14,25 +14,6 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  // params: {
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   folder: (req) => {
-  //     console.log(req, "req");
-  //     const base = "portfolio";
-  //     // console.log("Request Body:", req.body.category);
-  //     let folderPath = `${base}/${req.body.category}`;
-
-  //     if (req.body.subCategory) {
-  //       folderPath += `/${req.body.subCategory}`;
-  //     }
-
-  //     return folderPath;
-  //   },
-  //   format: async () => "png", // ফাইল ফরম্যাট সেট করো
-  //   public_id: (req, file) => file.originalname.split(".")[0],
-  //   // allowed_formats: ['jpeg', 'png', 'jpg', 'webp'], // ফরম্যাট সীমাবদ্ধতা
-  // },
   params: async (req, file) => {
     let base = "portfolio";
 
@@ -41,7 +22,7 @@ const storage = new CloudinaryStorage({
     } else if (req.originalUrl.includes("skill")) {
       base = "portfolio/skills";
     } else if (req.originalUrl.includes("project")) {
-      base = `portfolio/projects`;
+      base = "portfolio/projects";
     }
 
     const fileName = file.originalname
