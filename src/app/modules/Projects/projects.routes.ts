@@ -30,4 +30,9 @@ router.patch(
   ProjectsController.updateProjectSerialNumber
 );
 
+router.delete(
+  "/delete-project/:id",
+  ProjectsController.deleteProject
+);
+
 export const ProjectsRoutes = router;

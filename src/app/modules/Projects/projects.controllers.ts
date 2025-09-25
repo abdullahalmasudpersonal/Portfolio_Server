@@ -45,8 +45,7 @@ const updateProject = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const updateProjectSerialNumber = catchAsync(
-  async (req: Request, res: Response) => {
+const updateProjectSerialNumber = catchAsync(async (req: Request, res: Response) => {
     const result = await ProjectsServices.updateProjectSerialNumberInotDB(req);
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -57,10 +56,21 @@ const updateProjectSerialNumber = catchAsync(
   }
 );
 
+const deleteProject = catchAsync(async (req: Request, res: Response) => {
+  const result = await ProjectsServices.deleteProjectIntoDB(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Delete project Successfully",
+    data: result,
+  });
+});
+
 export const ProjectsController = {
   getAllProjects,
   getSingleProject,
   createProject,
   updateProject,
   updateProjectSerialNumber,
+  deleteProject,
 };

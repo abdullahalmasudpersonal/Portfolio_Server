@@ -85,10 +85,16 @@ const updateProjectSerialNumberInotDB = async (req: Request) => {
   }
 };
 
+const deleteProjectIntoDB = async(req:Request)=>{
+const projectId = req.params.id;
+return await Project.findByIdAndDelete({_id:projectId})
+}
+
 export const ProjectsServices = {
   getAllProjects,
   getSingleProjectIntoDB,
   createProjectInotDB,
   updateProjectIntoDB,
   updateProjectSerialNumberInotDB,
+  deleteProjectIntoDB
 };
