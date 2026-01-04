@@ -1,8 +1,19 @@
-import { Router } from "express";
-import { VisitorController } from "./visiotrs.controller";
+import { Router } from 'express';
+import { VisitorController } from './visiotrs.controller';
+// import auth from '../../middlewares/auth';
+// import { USER_ROLE } from '../User/user.constant';
 
 const router = Router();
 
-router.post("/", VisitorController.createVisiotr);
+router.get(
+  '/',
+  VisitorController.getVisiotr,
+);
+
+// router.get(
+//   '/',
+//   auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+//   VisitorController.getVisiotrWithFilter,
+// );
 
 export const visitorRoutes = router;

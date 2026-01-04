@@ -5,6 +5,7 @@ import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorhandler";
 import favicon from "serve-favicon";
 import path from "path";
+import { visitorMiddleware } from "./app/middlewares/visitor.middleware";
 
 const app: Application = express();
 app.use(favicon(path.join(__dirname, "../public", "favicon.ico")));
@@ -25,7 +26,7 @@ app.use(
 );
 
 // application routes
-app.use("/api", router);
+app.use("/api", router, visitorMiddleware);
 
 app.get("/", (req: express.Request, res: express.Response) => {
   res.send("Hellow from Abdullah Al Masud Portfolio Backend");

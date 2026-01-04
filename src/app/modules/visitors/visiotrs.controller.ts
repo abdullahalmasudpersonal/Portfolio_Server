@@ -1,21 +1,34 @@
-import httpStatus from "http-status";
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
-import { Request, Response } from "express";
-import { VisitorServices } from "./visitors.service";
+import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { Request, Response } from 'express';
+import { VisitorServices } from './visitors.service';
 
-const createVisiotr = catchAsync(async (req: Request, res: Response) => {
-  // const { id } = req.params;
-
-  const result = await VisitorServices.createVisiotrIntoDB(req);
+const getVisiotr = catchAsync(async (req: Request, res: Response) => {
+  const result = await VisitorServices.getVisiotrIntoDB(req);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Create visitor successfully!",
+    message: 'Get visitors successfully!',
     data: result,
   });
 });
 
+// const getVisiotrWithFilter = catchAsync(async (req: Request, res: Response) => {
+//   const result = await VisitorServices.getVisitorsWithFilterWithSearchIntoDB(
+//     req.query,
+//   );
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: 'Get filter visitors successfully!',
+//     meta: result.meta,
+//     data: result.result,
+//   });
+// });
+
 export const VisitorController = {
-  createVisiotr,
+  getVisiotr,
+  // getVisiotrWithFilter,
 };
+
