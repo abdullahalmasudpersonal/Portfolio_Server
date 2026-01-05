@@ -4,6 +4,7 @@ export interface TSkills {
   serialNumber: number;
   title: string;
   image?: string;
+  show?: boolean;
 }
 
 export interface SkillModel extends Model<TSkills> {

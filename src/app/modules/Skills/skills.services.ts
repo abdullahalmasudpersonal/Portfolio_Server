@@ -31,6 +31,8 @@ const crearteSkillIntoDB = async (req: Request) => {
 };
 
 const updateSkillIntoDB = async (_id: string, req: Request) => {
+  // await Skill.updateMany({}, { $set: { show: true } }); // To set default value true for all existing documents
+
   const skill = await Skill.isSkillExistsByName(req?.params?.id);
   if (!skill) {
     throw new AppError(httpStatus.NOT_FOUND, "This skill is not found !!!");

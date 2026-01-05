@@ -15,6 +15,10 @@ const skillSchema = new Schema<TSkills, SkillModel>({
   image: {
     type: String,
   },
+  show: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 skillSchema.statics.isSkillExistsByName = async function (_id: string) {
