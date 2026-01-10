@@ -26,6 +26,8 @@ router.patch(
   }
 );
 
+router.patch("/update-visibility/:id", SkillControllers.updateSkillVisibilety);
+
 router.patch(
   "/update-skill-serial-number",
   SkillControllers.updateSkillSerialNumber

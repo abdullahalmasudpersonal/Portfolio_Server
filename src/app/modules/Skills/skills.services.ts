@@ -33,21 +33,49 @@ const crearteSkillIntoDB = async (req: Request) => {
 const updateSkillIntoDB = async (_id: string, req: Request) => {
   // await Skill.updateMany({}, { $set: { show: true } }); // To set default value true for all existing documents
 
-  const skill = await Skill.isSkillExistsByName(req?.params?.id);
+  const skill = await Skill.isSkillExistsById(_id);
   if (!skill) {
     throw new AppError(httpStatus.NOT_FOUND, "This skill is not found !!!");
   }
 
-  const file = req.file;
-  const updatedSkillData = req.body;
+  // const file = req.file;
+  // const updatedSkillData = req.body;
+  // updatedSkillData.title = req?.body?.title;
+  // updatedSkillData.image = file?.path;
 
-  updatedSkillData.title = req?.body?.title;
-  updatedSkillData.image = file?.path;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updateData: Record<string, any> = {};
 
-  await Skill.updateOne({ _id }, updatedSkillData);
+  if (req.body.title) {
+    updateData.title = req.body.title;
+  }
 
-  const updatedSkill = await Skill.findOne({ _id });
+  if (req.file?.path) {
+    updateData.image = req.file.path;
+  }
+
+  // await Skill.updateOne({ _id }, updateData);
+  // const updatedSkill = await Skill.findOne({ _id });
+  // return updatedSkill;
+
+  const updatedSkill = await Skill.findByIdAndUpdate(
+    _id,
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
+
   return updatedSkill;
+};
+
+const updateSkillVisibiletyIntoDB = async (req: Request) => {
+  const skillId = req.params.id;
+  const {show} = req.body;
+  
+  const skill = await Skill.isSkillExistsById(skillId);
+  if (!skill) {
+    throw new AppError(httpStatus.NOT_FOUND, "This skill is not found !!!");
+  }
+  await Skill.updateOne({ _id: skillId }, { $set: { show } });
 };
 
 const updateSkillSerialNumberIntoDB = async (req: Request) => {
@@ -83,7 +111,8 @@ export const SkillServices = {
   crearteSkillIntoDB,
   getAllSkillIntoDB,
   getSingleSkillIntoDB,
-  deleteSkillIntoDB,
   updateSkillIntoDB,
+  updateSkillVisibiletyIntoDB,
   updateSkillSerialNumberIntoDB,
+  deleteSkillIntoDB,
 };

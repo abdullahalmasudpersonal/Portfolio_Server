@@ -8,5 +8,5 @@ export interface TSkills {
 }
 
 export interface SkillModel extends Model<TSkills> {
-  isSkillExistsByName(_id: string): Promise<TSkills | null>;
+  isSkillExistsById(_id: string): Promise<TSkills | null>;
 }

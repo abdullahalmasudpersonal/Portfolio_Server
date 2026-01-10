@@ -57,6 +57,16 @@ const updateSkill = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateSkillVisibilety = catchAsync(async (req: Request, res: Response) => {
+  const result = await SkillServices.updateSkillVisibiletyIntoDB(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Update skill visibility!",
+    data: result,
+  });
+});
+
 const updateSkillSerialNumber = catchAsync(
   async (req: Request, res: Response) => {
     const result = await SkillServices.updateSkillSerialNumberIntoDB(req);
@@ -73,7 +83,8 @@ export const SkillControllers = {
   getAllSkill,
   getSingleSkill,
   createSkill,
-  deleteSkill,
   updateSkill,
+  updateSkillVisibilety,
   updateSkillSerialNumber,
+  deleteSkill,
 };

@@ -21,7 +21,7 @@ const skillSchema = new Schema<TSkills, SkillModel>({
   },
 });
 
-skillSchema.statics.isSkillExistsByName = async function (_id: string) {
+skillSchema.statics.isSkillExistsById = async function (_id: string) {
   return await Skill.findById({ _id });
 };
 
